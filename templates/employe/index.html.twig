@@ -1,7 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EmployeController!{% endblock %}
+{% block title %}Liste des employés{% endblock %}
 
 {% block body %}
+    <h1>Liste des employés</h1>
+
+    J'affiche le nom et prénom de chaque employé :<br><br>
+    {% for employe in employes %}
+    
+    <b>{{ employe }}</b> <br><br>
+
+    {% endfor %}<br><br>
+
+    J'affiche le nom et prénom de chaque employé et la raison sociale de son entreprise :<br><br>
+    {% for employe in employes %}
+    
+    <b>{{ employe }} ({{ employe.entreprise.raisonSociale }}) </b> <br><br>
+
+    {% endfor %}<br><br>
+
+    J'affiche le nom et prénom de chaque employé (avec un lien !! ) et la raison sociale "longue" (grace à __toString()) :<br><br>
+    {% for employe in employes %}
+    
+    <a href="{{ path('show_employe', {'id' : employe.id}) }}">{{ employe }}</a> {{ employe.entreprise }} </b> <br><br>
+
+    {% endfor %}<br><br>
+
 
 {% endblock %}

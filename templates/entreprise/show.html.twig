@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail d'une entreprise{% endblock %}
+
+{% block body %}
+
+    <h1>Détail d'une entreprise</h1>  
+
+    <h2>{{ entreprise.raisonSociale }}</h2>
+    <p>
+        Adresse : {{ entreprise.adresse }} {{ entreprise.codePostal }} {{ entreprise.ville }}
+    </p>
+    <p>
+        Adresse "rapide" : {{ entreprise.adresseComplete }}
+    </p>
+    <p>
+        Date de création : {{ entreprise.dateCreationString }}
+    </p>
+    <p>
+        Date de création filtrée par TWIG : {{ entreprise.dateCreation | date("m-d-Y") }}
+        <!-- je garde mon objet datetime et j'applique un filtre fourni par twig \{\{ objet_datetime|date("m-d-Y")  }} -->
+        <!-- le filtre doit bien cprrespondre à l'objet en question -->
+    </p>
+
+
+    <h2>Liste des employés de l'entreprise</h2>
+    {% for employe in entreprise.employes %}
+
+        {{ employe }}<br><br>
+        
+    {% endfor %}
+
+{% endblock %}
+
+<!-- video à 3:17:03 -->

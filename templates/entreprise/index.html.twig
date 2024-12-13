@@ -26,15 +26,65 @@
     <!-- element est choisi au pif -->
     {% for element in tableau %}
     
-    {{ element }}<br><br>
+        {{ element }}<br>
 
-    {% endfor %}
-
-
+    {% endfor %}<br>
 
 
 
+    enfin j'affiche les vraies informations de l'exercice :<br><br> 
+    {% for entreprise in entreprises %}
+    
+        <!-- $entreprise->getRaisonSociale() : on reprend les noms des entités, pas ceux de la BDD -->
+        {{ entreprise.raisonSociale }}<br><br>
 
+    {% endfor %}<br><br>
+
+
+
+    Méthode 1 de Mickael : on concatène<br><br>
+    {% for entreprise in entreprises %}
+    
+    
+        <b>{{ entreprise.raisonSociale }}</b> {{ ' ('~ entreprise.codePostal ~ ' ' ~ entreprise.ville ~ ')' }}<br><br>
+    
+
+    {% endfor %}<br><br>
+
+
+    Méthode 2 de Michael (plus simple):<br><br>
+    {% for entreprise in entreprises %}
+    
+        <b>{{ entreprise.raisonSociale }}</b> ({{ entreprise.codePostal }} {{ entreprise.ville }})<br><br>
+
+    {% endfor %}<br><br>
+
+
+    Méthode 3 _toString :<br><br>
+    {% for entreprise in entreprises %}
+    
+        <b>{{ entreprise }}</b> <br><br>
+
+    {% endfor %}<br><br>
+
+
+    Je ne veux que les entreprises de Strasbourg :<br><br>
+    {% for entreprise in entreprises2 %}
+    
+        <b>{{ entreprise }}</b> <br><br>
+
+    {% endfor %}<br><br>
+
+
+    Je veux toutes les entreprises en tri DESC et je crée des liens ! :<br><br>
+    {% for entreprise in entreprises3 %}
+    
+        <!-- tant que href est vide, on ne va nulle part, on va le compléter comme suit : 
+        path('nom de la méthode qui permet de récupérer le détail d'une entreprise') et aussi l'identifiant de l'entreprise concernée -->
+        <a href="{{ path('show_entreprise', {'id' : entreprise.id}) }}">{{ entreprise.raisonSociale }}</a> <br><br>
+        <!-- 'id' est bien indiqué tel quel dans l'url, c'est le terme exact de l'url -->
+
+    {% endfor %}<br><br>
 
 
 {% endblock %}

@@ -64,6 +64,11 @@ class Entreprise
         return $this->dateCreation;
     }
 
+    public function getDateCreationString(): ?string
+    {
+        return $this->dateCreation->format("d-m-Y");
+    }
+
     public function setDateCreation(\DateTimeInterface $dateCreation): static
     {
         $this->dateCreation = $dateCreation;
@@ -107,6 +112,12 @@ class Entreprise
         return $this;
     }
 
+    // je crée une fonction pour obtenir l'adresse complète rapidement
+    public function getAdresseComplete(): ?string
+    {
+        return $this->adresse." ".$this->codePostal." ".$this->ville;
+    }
+
     /**
      * @return Collection<int, Employe>
      */
@@ -136,4 +147,10 @@ class Entreprise
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->raisonSociale."  (".$this->codePostal." ".$this->ville.")";
+    }
+
 }

@@ -12,6 +12,23 @@
         {% endblock %}
     </head>
     <body>
+
+        <!-- ici, on trouvera les choses communes à toutes nos vues -> au dessus du block body !! -->
+
+        <nav>
+            <ul>
+                <li>
+                    <!-- dans symfony, les liens s'écrivent d'une certaine façon :
+                    dans path, on met le nom de la méthode qui sert à afficher la liste d'entreprise, qui est "app_entreprise", nom de la méthode index() de EntrepriseController  -->
+                    <a href="{{ path('app_entreprise') }}">Liste des entreprises</a>
+                </li>
+                <li>
+                    <a href="{{ path('app_employe') }}">Liste des employés</a>
+                </li>
+            </ul>
+        </nav>
+
         {% block body %}{% endblock %}
+        
     </body>
 </html>

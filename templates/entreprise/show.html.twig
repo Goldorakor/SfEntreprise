@@ -7,29 +7,54 @@
     <h1>Détail d'une entreprise</h1>  
 
     <h2>{{ entreprise.raisonSociale }}</h2>
+
     <p>
-        Adresse : {{ entreprise.adresse }} {{ entreprise.codePostal }} {{ entreprise.ville }}
-    </p>
-    <p>
-        Adresse "rapide" : {{ entreprise.adresseComplete }}
-    </p>
-    <p>
-        Date de création : {{ entreprise.dateCreationString }}
-    </p>
-    <p>
-        Date de création filtrée par TWIG : {{ entreprise.dateCreation | date("m-d-Y") }}
+        Adresse : {{ entreprise.adresse }} {{ entreprise.codePostal }} {{ entreprise.ville }}<br>
+    
+        Adresse "rapide" : {{ entreprise.adresseComplete }}<br>
+    
+        Date de création : {{ entreprise.dateCreationString }}<br>
+    
+        Date de création filtrée par TWIG : {{ entreprise.dateCreation | date("m-d-Y") }}<br>
         <!-- je garde mon objet datetime et j'applique un filtre fourni par twig \{\{ objet_datetime|date("m-d-Y")  }} -->
         <!-- le filtre doit bien cprrespondre à l'objet en question -->
     </p>
 
 
     <h2>Liste des employés de l'entreprise</h2>
-    {% for employe in entreprise.employes %}
 
-        {{ employe }}<br><br>
+    <!-- dans le contexte PHP classique, on utilise count() pour savoir combien d'éléments existent dans la collection, dans le contexte TWIG, on utilise le filtre length -->
+    {% if entreprise.employes | length > 0 %}
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Employé
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employe in entreprise.employes %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('show_employe', {'id' : employe.id}) }}">{{ employe }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
         
-    {% endfor %}
+    
+    {% else %}
+
+        <p>Aucun employé dans cette entreprise.</p>
+        
+    {% endif %}
+
+    
 
 {% endblock %}
 
-<!-- video à 3:17:03 -->
+

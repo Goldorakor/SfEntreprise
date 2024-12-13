@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des entreprises{% endblock %}
+
+{% block body %}
+
+    <h1>Liste des entreprises</h1>
+
+
+    
+    <!-- 
+        dans le controller, on a cela
+        [
+            'controller_name' => 'EntrepriseController',
+        ]
+        
+        on se doute que la vue affichera : EntrepriseController
+    -->
+    {{ controller_name }}<br><br>
+
+    Bonjour {{ name }} !<br><br>
+
+    je teste ma variable : {{ name1 }}<br><br><br><br>
+
+    
+    <!-- element est choisi au pif -->
+    {% for element in tableau %}
+    
+    {{ element }}<br><br>
+
+    {% endfor %}
+
+
+
+
+
+
+
+
+{% endblock %}

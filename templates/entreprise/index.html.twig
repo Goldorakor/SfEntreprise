@@ -76,12 +76,18 @@
     {% endfor %}<br><br>
 
 
+    <a href="{{ path('new_entreprise') }}" class="btn btn-primary">Ajouter une entreprise</a><br><br>
+
+
     Je veux toutes les entreprises en tri DESC et je crée des liens ! :<br><br>
     {% for entreprise in entreprises3 %}
     
         <!-- tant que href est vide, on ne va nulle part, on va le compléter comme suit : 
         path('nom de la méthode qui permet de récupérer le détail d'une entreprise') et aussi l'identifiant de l'entreprise concernée -->
-        <a href="{{ path('show_entreprise', {'id' : entreprise.id}) }}">{{ entreprise.raisonSociale }}</a> <br><br>
+        <a href="{{ path('show_entreprise', {'id' : entreprise.id}) }}">{{ entreprise.raisonSociale }}</a>
+        <a class="btn btn-warning" href="{{ path('edit_entreprise', {'id' : entreprise.id}) }}">Editer le profil</a> {# bouton pour éditer l'entreprise #}
+        <a class="btn btn-danger" href="{{ path('delete_entreprise', {'id' : entreprise.id}) }}">Supprimer le profil</a> {# bouton pour supprimer l'entreprise #}
+        <br><br>
         <!-- 'id' est bien indiqué tel quel dans l'url, c'est le terme exact de l'url -->
 
     {% endfor %}<br><br>

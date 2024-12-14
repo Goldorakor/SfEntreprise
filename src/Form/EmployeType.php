@@ -45,6 +45,7 @@ class EmployeType extends AbstractType
             ], DateType::class) // attention à l'ordre des arguments !
 
             ->add('ville', TextType::class, [
+                'required' => false, // on rend ce champ non obligatoire dans la saisie de notre formulaire : seul moyen possible
                 'attr' => [
                     'class' => 'form-control' // équivaut à attribuer la valeur 'form-control' à l'attribut 'class' dans la balise input -> <input type="text" id="name" name="name" class="form-control" />
                 ]

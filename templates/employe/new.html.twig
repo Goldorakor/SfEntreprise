@@ -6,9 +6,58 @@
 
     <h1>Ajouter un employé</h1>
 
-    <!-- \{\{ form(form) }} : ancienne syntaxe ambigue --> 
-    {{ form(formAddEmploye) }}
+    
+    {# {{ form(form) }} : ancienne syntaxe ambigue rtemplacée par celle en dessous #}
+    {# {{ form(formAddEmploye) }} => cette ligne ne permet pas d'avoir bcp de controle sur l'affichage du formulaire. #}
+    
 
+
+    {# 1er affichage #}
+    {# {{ form(formAddEmploye) }} => on le remplace par le bloc en dessous, qui offre plus de liberté pour manipuler le formulaire #}
+
+    
+    {# 2eme affichage => même résultat que le premier #}
+    {# {{ form_start(formAddEmploye) }}
+
+        {{ form_row(formAddEmploye.nom) }}  nom_du_formulaire.nom_du_champ => nom des champs de la fonction buildForm() dans EmployeType.php 
+        {{ form_row(formAddEmploye.prenom) }}
+        {{ form_row(formAddEmploye.dateNaissance) }}
+        {{ form_row(formAddEmploye.dateEmbauche) }}
+        {{ form_row(formAddEmploye.entreprise) }}
+        {{ form_row(formAddEmploye.ville) }}
+        {{ form_row(formAddEmploye.valider) }}
+
+    {{ form_end(formAddEmploye) }} #}
+
+
+    {# 3eme affichage #}
+    {{ form_start(formAddEmploye) }}
+
+        <div class="row">
+            <div class="col-sm">
+                {{ form_row(formAddEmploye.nom) }}
+            </div>
+            <div class="col-sm">
+                {{ form_row(formAddEmploye.prenom) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                {{ form_row(formAddEmploye.dateNaissance) }}
+            </div>
+            <div class="col-sm">
+                {{ form_row(formAddEmploye.dateEmbauche) }}
+            </div>
+        </div>
+
+        {# on ne modifie pas l'affichage des derniers champs #}
+        {{ form_row(formAddEmploye.entreprise) }}
+        {{ form_row(formAddEmploye.ville) }}
+        {{ form_row(formAddEmploye.valider) }}
+
+    {{ form_end(formAddEmploye) }}
+
+    
 
     
 <!--

@@ -72,7 +72,10 @@ class EntrepriseController extends AbstractController
 
 
     // #[Route('/entreprise/{id}', name: 'show_entreprise')] -> on copie colle et on adapte à la fonction new()
-    #[Route('/entreprise/new', name: 'new_entreprise')] // 'new_entreprise' est un nom cohérent qui décrit bien la fonction
+    #[Route('/entreprise/new', name: 'new_entreprise')] // 'new_entreprise' est un nom cohérent qui décrit bien la fonction attendue
+
+    // ajout d'une deuxième route car la méthode new_edit() sert également à modifier une entreprise de notre BDD
+    #[Route('/entreprise/{id}/edit', name: 'edit_entreprise')] // 'edit_entreprise' est un nom cohérent qui décrit bien la fonction attendue
 
     // https://symfony.com/doc/current/forms.html#rendering-forms
     /*
@@ -88,13 +91,22 @@ class EntrepriseController extends AbstractController
         ]);
     }
     */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response // pour ajouter une entreprise à notre BDD
+    public function new_edit(Entreprise $entreprise = null, Request $request, EntityManagerInterface $entityManager): Response // pour ajouter une entreprise à la BDD (ou modifier une entreprise dans la BDD : public function new() s'appelle désormais public function new_edit() )
     {
-        // 1. on crée une nouvelle entreprise (un objet entreprise est bien créé ici)
+        /* 
+        ancien 1. on crée une nouvelle entreprise (un objet entreprise est bien créé ici)
         $entreprise = new Entreprise();
+        */
+
+        // 1. si pas d'entreprise, on crée une nouvelle entreprise (un objet entreprise est bien créé ici) - si elle existe déjà, pas besoin de la créer
+        if(!$entreprise) {
+            $entreprise = new Entreprise();
+        }
+
 
         // 2. on crée le formulaire à partir de EntrepriseType (on veut ce modèle là bien entendu)
         $form = $this->createForm(EntrepriseType::class, $entreprise); // c'est bien la méthode createForm() qui permet de créer le formulaire
+
 
         // 4. le traitement s'effectue ici ! si le formulaire soumis est correct, on fera l'insertion en BDD
         /*
@@ -131,10 +143,20 @@ class EntrepriseController extends AbstractController
             // 'form' => $form,  on fait passer une variable form qui prend la valeur $form
             // on change le nom pour éviter toute ambiguité 'form' -> 'formAddEntreprise' comme expliqué dans new.html.twig
             'formAddEntreprise' => $form,
+            'edit' => $entreprise->getId() // comportement booléen 
         ]);
     }
 
 
+    // {id} sera l'identifiant de l'entreprise choisie -> dans Entity/Entreprise, $id sert bien à identifier chaque objet $entreprise
+    #[Route('/entreprise/{id}/delete', name: 'delete_entreprise')]
+    public function delete(Entreprise $entreprise, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($entreprise); // on enlève l'entreprise ciblée de la collection d'entreprises
+        $entityManager->flush(); // on effectue la requête SQL : DELETE FROM
+
+        return $this->redirectToRoute('app_entreprise'); // après une suppression, on redirige vers la liste d'entreprises
+    }
 
 
 

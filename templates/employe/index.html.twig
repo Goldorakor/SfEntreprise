@@ -5,6 +5,8 @@
 {% block body %}
     <h1>Liste des employés</h1>
 
+    <a href="{{ path('new_employe') }}" class="btn btn-primary">Ajouter un employé</a><br><br>
+
     J'affiche le nom et prénom de chaque employé :<br><br>
     {% for employe in employes %}
     
@@ -22,7 +24,10 @@
     J'affiche le nom et prénom de chaque employé (avec un lien !! ) et la raison sociale "longue" (grace à __toString()) :<br><br>
     {% for employe in employes %}
     
-    <a href="{{ path('show_employe', {'id' : employe.id}) }}">{{ employe }}</a> {{ employe.entreprise }} </b> <br><br>
+    <a href="{{ path('show_employe', {'id' : employe.id}) }}">{{ employe }}</a> {{ employe.entreprise }}
+    <a class="btn btn-warning" href="{{ path('edit_employe', {'id' : employe.id}) }}">Editer le profil</a> {# bouton pour éditer l'employé #}
+    <a class="btn btn-danger" href="{{ path('delete_employe', {'id' : employe.id}) }}">Supprimer le profil</a> {# bouton pour supprimer l'employé #}
+    <br><br>
 
     {% endfor %}<br><br>
 

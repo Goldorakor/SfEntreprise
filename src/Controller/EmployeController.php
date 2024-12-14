@@ -34,6 +34,9 @@ class EmployeController extends AbstractController
     // #[Route('/employe/{id}', name: 'show_employe')] -> on copie colle et on adapte à la fonction new()
     #[Route('/employe/new', name: 'new_employe')] // 'new_employe' est un nom cohérent qui décrit bien la fonction
 
+    // ajout d'une deuxième route car la méthode new_edit() sert également à modifier un employé de notre BDD
+    #[Route('/employe/{id}/edit', name: 'edit_employe')] // 'edit_employe' est un nom cohérent qui décrit bien la fonction attendue
+
     // https://symfony.com/doc/current/forms.html#rendering-forms
     /*
     public function new(Request $request): Response
@@ -49,10 +52,18 @@ class EmployeController extends AbstractController
     }
     */
 
-    public function new(Request $request, EntityManagerInterface $entityManager): Response // pour ajouter une entreprise à notre BDD
+    public function new_edit(Employe $employe = null, Request $request, EntityManagerInterface $entityManager): Response // pour ajouter une entreprise à notre BDD
     {
-        // 1. on crée un nouvel employé (un objet employe est bien créé ici)
+        /* 
+        ancien 1. on crée un nouvel employé (un objet employe est bien créé ici)
         $employe = new Employe();
+        */
+
+        // 1. si pas d'employé, on crée un nouvel employé (un objet employe est bien créé ici) - s'il existe déjà, pas besoin de le créer
+        if(!$employe) {
+            $employe = new Employe();
+        }
+
 
         // 2. on crée le formulaire à partir de EmployeType (on veut ce modèle là bien entendu)
         $form = $this->createForm(EmployeType::class, $employe); // c'est bien la méthode createForm() qui permet de créer le formulaire
@@ -92,7 +103,21 @@ class EmployeController extends AbstractController
             // 'form' => $form,  on fait passer une variable form qui prend la valeur $form
             // on change le nom pour éviter toute ambiguité 'form' -> 'formAddEmploye' comme expliqué dans new.html.twig
             'formAddEmploye' => $form,
+            'edit' => $employe->getId() // comportement booléen
         ]);
+    }
+
+
+
+
+    // {id} sera l'identifiant de l'employé choisi -> dans Entity/Employe, $id sert bien à identifier chaque objet $employe
+    #[Route('/employe/{id}/delete', name: 'delete_employe')]
+    public function delete(Employe $employe, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($employe); // on enlève l'employé ciblé de la collection d'employés
+        $entityManager->flush(); // on effectue la requête SQL : DELETE FROM
+
+        return $this->redirectToRoute('app_employe'); // après une suppression, on redirige vers la liste d'employés
     }
 
 

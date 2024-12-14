@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un employé{% endblock %}
+
+{% block body %}
+
+    <h1>Ajouter un employé</h1>
+
+    <!-- \{\{ form(form) }} : ancienne syntaxe ambigue --> 
+    {{ form(formAddEmploye) }}
+
+
+    
+<!--
+
+https://symfony.com/doc/current/forms.html#rendering-forms 
+
+{# templates/task/new.html.twig #}
+\{\{ form(form) }} -> risque de confusion avec la syntaxe form*1(form*2) 
+form*1 est le nom de la fonction qui permet de récupérer le formulaire (fonction à appeler pour rendre le formulaire visible) 
+l'argument form*2 dedans est le nom de la variable qui provient du controller employe dans la public function new() : 'form' => $form,
+
+on va donc changer le nom de la variable dans le EmployeController pour éviter toute ambiguité : 'form' -> 'formAddEmploye'
+
+-->
+
+
+{% endblock %}
+
+

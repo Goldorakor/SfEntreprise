@@ -35,6 +35,7 @@ class Entreprise
      * @var Collection<int, Employe>
      */
     #[ORM\OneToMany(targetEntity: Employe::class, mappedBy: 'entreprise', orphanRemoval: true)]
+    #[ORM\OrderBy(["nom" => "ASC"])] // on veut trier les employés par ordre alphabétique de nom. (pour la liste d'employés de chaque entreprise dans la vue "détal d'une entreprise")
     private Collection $employes;
 
     public function __construct()
